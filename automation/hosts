@@ -1,0 +1,13 @@
+[control_plane]
+controller_0 ansible_host="{{ control_plane.controller_0.ip.external }}" ansible_user="{{ control_plane.controller_0.username }}"
+controller_1 ansible_host="{{ control_plane.controller_1.ip.external }}" ansible_user="{{ control_plane.controller_1.username }}"
+controller_2 ansible_host="{{ control_plane.controller_2.ip.external }}" ansible_user="{{ control_plane.controller_2.username }}"
+
+[worker_plane]
+worker_0 ansible_host="{{ worker_plane.worker_0.ip.external }}" ansible_user="{{ worker_plane.worker_0.username }}"
+worker_1 ansible_host="{{ worker_plane.worker_1.ip.external }}" ansible_user="{{ worker_plane.worker_1.username }}"
+worker_2 ansible_host="{{ worker_plane.worker_2.ip.external }}" ansible_user="{{ worker_plane.worker_2.username }}"
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_private_key_file="{{ ssh.gcloud.private_key_file }}"
