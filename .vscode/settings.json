@@ -2,6 +2,7 @@
 	"conventionalCommits.scopes": [
 		"infrastructure",
 		"automation",
-		"cluster"
+		"cluster",
+		"readme"
 	]
 }
