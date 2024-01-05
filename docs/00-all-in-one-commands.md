@@ -27,7 +27,6 @@ terraform show
 cd $PROJECT_ROOT
 ./scripts/export-nodes-config-terraform-to-ansible.sh
 
-k0sctl init > k0sctl.yaml
 k0sctl apply --config k0sctl.yaml
 k0sctl kubeconfig > kubeconfig
 

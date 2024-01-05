@@ -1,0 +1,168 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-cluster
+spec:
+  hosts:
+  - ssh:
+      address: 10.10.115.40
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: controller
+  - ssh:
+      address: 10.10.115.39
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: controller
+  - ssh:
+      address: 10.10.115.43
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: controller    
+  - ssh:
+      address: 10.10.116.2
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.116.3
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.116.4
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.116.5
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.115.34
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.115.35
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.115.36
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.115.37
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker
+  - ssh:
+      address: 10.10.115.38
+      user: appuser
+      port: 22
+      keyPath: /home/appuser/.ssh/id_rsa
+    role: worker    
+  k0s:
+    version: 1.24.4+k0s.0
+    dynamicConfig: false
+    config:
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: ClusterConfig
+      metadata:
+        creationTimestamp: null
+        name: k0s
+      spec:
+        api:
+          address: 10.10.115.40
+          k0sApiPort: 9443
+          port: 6443
+          sans:
+          - 10.10.115.40
+          tunneledNetworkingMode: false
+        controllerManager: {}
+        extensions:
+          helm:
+            charts: null
+            repositories: null
+          storage:
+            type: openebs_local_storage
+        images:
+          calico:
+            cni:
+              image: docker.io/calico/cni
+              version: v3.23.3
+            kubecontrollers:
+              image: docker.io/calico/kube-controllers
+              version: v3.23.3
+            node:
+              image: docker.io/calico/node
+              version: v3.23.3
+          coredns:
+            image: k8s.gcr.io/coredns/coredns
+            version: v1.7.1
+          default_pull_policy: IfNotPresent
+          konnectivity:
+            image: quay.io/k0sproject/apiserver-network-proxy-agent
+            version: 0.0.32-k0s1
+          kubeproxy:
+            image: k8s.gcr.io/kube-proxy
+            version: v1.24.4
+          kuberouter:
+            cni:
+              image: docker.io/cloudnativelabs/kube-router
+              version: v1.4.0
+            cniInstaller:
+              image: quay.io/k0sproject/cni-node
+              version: 1.1.1-k0s.0
+          metricsserver:
+            image: k8s.gcr.io/metrics-server/metrics-server
+            version: v0.5.2
+          pushgateway:
+            image: quay.io/k0sproject/pushgateway-ttl
+            version: edge@sha256:7031f6bf6c957e2fdb496161fe3bea0a5bde3de800deeba7b2155187196ecbd9
+        installConfig:
+          users:
+            etcdUser: etcd
+            kineUser: kube-apiserver
+            konnectivityUser: konnectivity-server
+            kubeAPIserverUser: kube-apiserver
+            kubeSchedulerUser: kube-scheduler
+        konnectivity:
+          adminPort: 8133
+          agentPort: 8132
+        network:
+          calico:
+            ipAutodetectionMethod: ""
+          clusterDomain: prod.cityremit.local
+          dualStack: {}
+          kubeProxy:
+            mode: iptables
+          kuberouter: null
+          podCIDR: 172.31.48.1/20
+          provider: calico
+          serviceCIDR: 172.31.64.1/20
+        podSecurityPolicy:
+          defaultPolicy: 00-k0s-privileged
+        scheduler: {}
+        storage:
+          etcd:
+            externalCluster: null
+            peerAddress: 10.10.115.40
+          type: etcd
+        telemetry:
+          enabled: false
+      status: {}

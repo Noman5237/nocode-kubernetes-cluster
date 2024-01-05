@@ -53,11 +53,20 @@ echo "$merged_output" |
     "name": "k0s-cluster"
   },
   "spec": {
-    "hosts": .,
     "k0s": {
       "version": "1.27.4+k0s.0",
-      "dynamicConfig": false
-    }
+      "dynamicConfig": false,
+			"config": {
+				"spec": {
+					"network": {
+						"provider": "calico",
+						"podCIDR": "10.200.0.0/16",
+						"serviceCIDR": "10.100.0.0/16"
+					}
+				}
+			}
+    },
+    "hosts": .,
   }
 }' |
 	yq -P >$PROJECT_ROOT/k0sctl.yaml

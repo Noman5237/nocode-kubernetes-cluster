@@ -48,15 +48,19 @@ resource "google_compute_firewall" "kubernetes-allow-external" {
   }
   allow {
     protocol = "tcp"
-    ports    = ["22", "6443"]
+    ports    = ["22", "6443", "8000-10000", "30000-32767"]
   }
+	allow {
+		protocol = "udp"
+		ports    = ["8000-10000", "30000-32767"]
+	}
   source_ranges = [
     # allow from any range for external access
     "0.0.0.0/0"
   ]
 }
 
-# Allocate a static IP address that will be attached to the external load balancer fronting the Kubernetes API Servers
+# allocate an 
 resource "google_compute_address" "kubernetes-with-k0s" {
   name   = "kubernetes-with-k0s"
   region = module.config.default_region
